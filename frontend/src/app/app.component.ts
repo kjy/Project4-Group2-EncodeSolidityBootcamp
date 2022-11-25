@@ -7,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private http: HttpClient) { }
+  backendUrl: string | undefined;
+  tokenContractAddress: string | undefined;
+  ballotContractAddress: string | undefined;
+
+  constructor(private http: HttpClient) {
+    this.backendUrl = "http://localhost:3000"
+    this.http.get<any>(`${this.backendUrl}/get-token-contract-address`).subscribe((ans) => {
+      this.tokenContractAddress = ans.result;
+    })
+  }
 }
