@@ -11,6 +11,14 @@
                     <div class="row m-4">
                         <p>Token contract address: {{tokenContractAddress}}</p>
                     </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Amount</span>
+                        <input #requestAmount type="number" class="form-control"
+                            placeholder="How many tokens would you like to request?">
+                        <button [disabled]="tokenRequestPending" #btnRequestTokens
+                            (click)="requestTokens(requestAmount.value)"
+                            class="btn btn-success input-group-button">Request</button>
+                    </div>
                 </div>
                 <div class="container border rounded m-4">
                     <div *ngIf="!ballotContractAddress" class="row m-4">
