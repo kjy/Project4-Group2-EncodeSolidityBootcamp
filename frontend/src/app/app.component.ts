@@ -17,4 +17,8 @@ export class AppComponent {
       this.tokenContractAddress = ans.result;
     })
   }
+
+  connectBallotContract(address: string) {
+    this.ballotContractAddress = address;
+  }
 }
