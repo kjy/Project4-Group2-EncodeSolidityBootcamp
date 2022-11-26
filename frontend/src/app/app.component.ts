@@ -123,4 +123,7 @@ export class AppComponent {
         
     }
 
+  disconnectWallet() {
+    this.wallet = undefined;
+  }
 }
