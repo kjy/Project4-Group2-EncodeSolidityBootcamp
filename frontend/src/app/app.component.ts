@@ -22,7 +22,7 @@ export class AppComponent {
   tokenContract: ethers.Contract | undefined;
 
   tokenAddress: string | undefined;
-  
+
   ethBalance: number | string | undefined;
   tokenBalance: number | string | undefined;
   votePower: number | string | undefined;
@@ -43,10 +43,10 @@ export class AppComponent {
 
     // set up token contract object instance
     this.tokenContract = new ethers.Contract(
-      this.tokenAddress, 
-      tokenJson.abi, 
+      this.tokenAddress,
+      tokenJson.abi,
       this.wallet
-      );
+    );
 
 
     this.backendUrl = "http://localhost:3000"
@@ -59,15 +59,15 @@ export class AppComponent {
 
   createWallet() {
     this.wallet = ethers.Wallet.createRandom().connect(this.provider);
-    
+
     if (this.tokenAddress) {
       this.tokenContract = new ethers.Contract(
-        this.tokenAddress, 
-        tokenJson.abi, 
+        this.tokenAddress,
+        tokenJson.abi,
         this.wallet
       );
     }
-    
+
     this.updateValues();
   }
 
@@ -86,14 +86,14 @@ export class AppComponent {
           }
         );
         this.tokenContract['getVotes'](this.wallet?.address).then(
-        (votePowerBN: ethers.BigNumberish) => {
-          this.votePower = parseFloat(ethers.utils.formatEther(votePowerBN));
+          (votePowerBN: ethers.BigNumberish) => {
+            this.votePower = parseFloat(ethers.utils.formatEther(votePowerBN));
           }
         );
       }
     });
   }
-  
+
   importWallet(privateKey: string) {
     // TODO (optional): make this.wallet to be imported from a privateKey
     this.updateValues();
@@ -114,5 +114,7 @@ export class AppComponent {
     this.tokenRequestPending = true;
   }
 
-  
+  disconnectWallet() {
+    this.wallet = undefined;
+  }
 }
