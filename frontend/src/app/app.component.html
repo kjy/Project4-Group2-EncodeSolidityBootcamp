@@ -3,83 +3,78 @@
 
     <div class="col-lg-6 mx-auto">
         <div *ngIf="!wallet" class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <button (click)="createWallet()" type="button" class="btn btn-success btn-lg px-4 gap-3">Create Wallet </button>
-            <button type="button" class="btn btn-primary btn-lg px-4 gap-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Import Wallet</button>
-            <button (click)="connectWallet()" type="button" class="btn btn-danger btn-lg px-4 gap-3" disabled>Connect Wallet </button>
+            <button (click)="createWallet()" type="button" class="btn btn-success btn-lg px-4 gap-3">Create Wallet
+            </button>
+            <button type="button" class="btn btn-primary btn-lg px-4 gap-3" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">Import Wallet</button>
+            <button (click)="connectWallet()" type="button" class="btn btn-danger btn-lg px-4 gap-3" disabled>Connect
+                Wallet </button>
         </div>
-        
+
 
         <div *ngIf="wallet">
+            <button (click)="disconnectWallet()" type="button" class="btn btn-danger btn-lg px-4 gap-3 mb-4">
+                Disconnect
+            </button>
             <div class="card border-0">
                 <div class="card-body">
                     <h4 class="card-title">Wallet Address</h4>
-                    <h6><a href='https://goerli.etherscan.io/address/{{wallet.address}}' target="_blank">View on Etherscan</a></h6>
+                    <h6><a href='https://goerli.etherscan.io/address/{{wallet.address}}' target="_blank">View on
+                            Etherscan</a></h6>
                     <p class="card-text">
-                    {{wallet.address}} <button (click)="connectWallet()" type="button" class="btn btn-primary">Change</button>
+                        {{wallet.address}} <button (click)="connectWallet()" type="button"
+                            class="btn btn-primary">Change</button>
                     </p>
-                    
+
                 </div>
-                </div>
-                <div class="card border-0">
+            </div>
+            <div class="card border-0">
                 <div class="card-body">
                     <h4 class="card-title">Token Contract</h4>
-                    <h6><a href='https://goerli.etherscan.io/address/{{tokenAddress}}' target="_blank">View on Etherscan</a></h6>
+                    <h6><a href='https://goerli.etherscan.io/address/{{tokenAddress}}' target="_blank">View on
+                            Etherscan</a></h6>
                     <p class="card-text">
-                    {{tokenAddress}}
+                        {{tokenAddress}}
                     </p>
                 </div>
             </div>
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                 <div class="card">
                     <div class="card-body">
-                    <h4 class="card-title">Your ETH Balance</h4>
-                    <p class="card-text">
-                        {{ethBalance}} 
-                    </p>
+                        <h4 class="card-title">Your ETH Balance</h4>
+                        <p class="card-text">
+                            {{ethBalance}}
+                        </p>
                     </div>
                 </div>
-            
+
                 <div class="card">
                     <div class="card-body">
-                    <h4 class="card-title">Your token Balance</h4>
-                    <p class="card-text">
-                        {{tokenBalance}}
-                    </p>
+                        <h4 class="card-title">Your token Balance</h4>
+                        <p class="card-text">
+                            {{tokenBalance}}
+                        </p>
                     </div>
                 </div>
-            
+
                 <div class="card">
                     <div class="card-body">
-                    <h4 class="card-title">Your Voting power is:</h4>
-                    <p class="card-text">
-                        {{votePower}} 
-                    </p>
+                        <h4 class="card-title">Your Voting power is:</h4>
+                        <p class="card-text">
+                            {{votePower}}
+                        </p>
                     </div>
                 </div>
-                </div>
+            </div>
             <button (click)="requestTokensTen()" type="button" class="btn btn-success btn-lg px-4 gap-3">
                 Request Tokens
             </button>
         </div>
-
     </div>
 
     <div class="container my-4 text-center">
         <div class="row justify-content-center my-4">
-            <div class="col-7 my-4">
-                <div *ngIf="tokenContractAddress" class="container border rounded m-4">
-                    <div class="row m-4">
-                        <p>Token contract address: {{tokenContractAddress}}</p>
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">Amount</span>
-                        <input #requestAmount type="number" class="form-control"
-                            placeholder="How many tokens would you like to request?">
-                        <button [disabled]="tokenRequestPending" #btnRequestTokens
-                            (click)="requestTokens(requestAmount.value)"
-                            class="btn btn-success input-group-button">Request</button>
-                    </div>
-                </div>
+            <div class="my-4">
                 <div class="container border rounded m-4">
                     <div *ngIf="!ballotContractAddress" class="row m-4">
                         <div class="input-group mb-3">
@@ -95,46 +90,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-5 my-4 text-truncate justify-content-center">
-                <div class="col-lg-6 mx-auto my-4">
-                    <div *ngIf="!wallet" class="d-grid gap-2 d-sm-flex justify-content-sm-center btn-group-vertical">
-                        <button (click)="createWallet()" type="button" class="btn btn-success btn-lg px-4 gap-3">
-                            Create Wallet
-                        </button>
-                        <button type="button" class="btn btn-info btn-lg px-4 gap-3">
-                            Import Wallet
-                        </button>
-                        <button type="button" class="btn btn-danger btn-lg px-4 gap-3">
-                            Connect Wallet
-                        </button>
-                    </div>
-
-                    <div *ngIf="wallet" class="row-fluid overflow-hidden">
-                        <button (click)="disconnectWallet()" type="button"
-                            class="btn btn-danger btn-lg px-4 gap-3 mb-4">
-                            Disconnect
-                        </button>
-                        <p>The token address is: 0x...{{ tokenAddress?.slice(-4) }}</p>
-                        <p>Your wallet address is: 0x...{{ wallet.address.slice(-4) }}</p>
-                        <div class="justify-content-sm-center my-4">
-                            <div class="card" style="width: 100%;">
-                                <div class="card-body">Your ETH balance: {{ethBalance}}</div>
-                            </div>
-                            <div class="card" style="width: 100%;">
-                                <div class="card-body">Your token balance: {{tokenBalance}}</div>
-                            </div>
-                            <div class="card" style="width: 100%;">
-                                <div class="card-body">Your voting power: {{votePower}}</div>
-                            </div>
-                        </div>
-                        <button (click)="requestTokensTen()" type="button" class="btn btn-success btn-lg px-4 gap-3">
-                            Request Tokens
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
         </div>
     </div>
 </div>
@@ -145,27 +100,30 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Wallet Import</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">(Make sure no thieves are looking)
-            <div class="input-group mt-4">
-            <input #inputMnemonic type="text" class="form-control" placeholder="Enter your mnumonic seed phrase">
-            <div class="input-group-append">
-                <button class="btn btn-success" data-bs-dismiss="modal" type="button" (click)="importWallet(inputMnemonic.value, 'mnemonic')">Via Mnemonic</button>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Wallet Import</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">(Make sure no thieves are looking)
+                <div class="input-group mt-4">
+                    <input #inputMnemonic type="text" class="form-control"
+                        placeholder="Enter your mnumonic seed phrase">
+                    <div class="input-group-append">
+                        <button class="btn btn-success" data-bs-dismiss="modal" type="button"
+                            (click)="importWallet(inputMnemonic.value, 'mnemonic')">Via Mnemonic</button>
+                    </div>
+                </div>
+                <div class="input-group mt-4">
+                    <input #inputPrivateKey type="text" class="form-control" placeholder="Enter your private key">
+                    <div class="input-group-append">
+                        <button class="btn btn-success" data-bs-dismiss="modal" type="button"
+                            (click)="importWallet(inputPrivateKey.value, 'privatekey')">Via Private Key</button>
+                    </div>
+                </div>
             </div>
-            <div class="input-group mt-4">
-            <input #inputPrivateKey type="text" class="form-control" placeholder="Enter your private key">
-            <div class="input-group-append">
-                <button class="btn btn-success" data-bs-dismiss="modal" type="button" (click)="importWallet(inputPrivateKey.value, 'privatekey')">Via Private Key</button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        </div>
         </div>
     </div>
 </div>
