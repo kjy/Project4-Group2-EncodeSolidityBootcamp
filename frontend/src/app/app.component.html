@@ -1,9 +1,10 @@
 <div class="px-4 py-5 my-5 text-center">
     <h1 class="display-5 fw-bold">Tokenized Ballot DApp</h1>
+
     <div class="col-lg-6 mx-auto my-4">
-        <p class="lead mb-4">Vote here! Vote Now!</p>
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <button type="button" class="btn btn-success btn-lg px-4 gap-3">
+
+        <div *ngIf="!wallet" class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <button (click)="createWallet()" type="button" class="btn btn-success btn-lg px-4 gap-3">
                 Create Wallet
             </button>
             <button type="button" class="btn btn-info btn-lg px-4 gap-3">
@@ -13,6 +14,26 @@
                 Connect Wallet
             </button>
         </div>
+
+        <div *ngIf="wallet">
+            <p>The token address is: {{ tokenAddress }}</p>
+            <p>Your wallet address is: {{ wallet.address }}</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-4">
+                <div class="card">
+                    <div class="card-body">Your ETH balance: {{ethBalance}}</div>
+                </div>
+                <div class="card">
+                    <div class="card-body">Your token balance: {{tokenBalance}}</div>
+                </div>
+                <div class="card">
+                    <div class="card-body">Your voting power: {{votePower}}</div>
+                </div>
+            </div>
+            <button (click)="requestTokensTen()" type="button" class="btn btn-success btn-lg px-4 gap-3">
+                Request Tokens
+            </button>
+        </div>
+
     </div>
 
     <div class="container my-4 text-center">
