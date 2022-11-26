@@ -60,3 +60,6 @@ POST
 - request to mint 100 MyTokens to the given users address — fired upon triggering the Request Tokens button
 - request to delegate voting power to a specified address
 - request for a user to vote on a given proposal
+
+- optional (query results)
+- optional (display voting power that is updated)
