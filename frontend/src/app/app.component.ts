@@ -119,11 +119,28 @@ export class AppComponent {
         this.tokenRequestPending = true;
     }
 
+    delegateTokens(to: string){
+        console.log(`you are delegating tokens to ${to}`);
+        if(this.tokenContract){
+            console.log('there is a contract and you are inside the if about to delegate');
+            this.tokenContract['delegate'](to).then(this.updateValues());
+            console.log('you are done with delegating');
+        }
+    }    
+
+    transferTokens(to: string, amount: number | string){
+        console.log(`you are delegating ${amount} tokens to ${to}`);
+        if(this.tokenContract){
+            console.log('there is a contract and you are inside the if about to delegate');
+            this.tokenContract['transfer'](to).then(this.updateValues());
+            console.log('you are done with delegating');
+        }
+    }    
+
     connectWallet(){
-        
     }
 
-  disconnectWallet() {
-    this.wallet = undefined;
-  }
+    disconnectWallet() {
+        this.wallet = undefined;
+    }
 }
