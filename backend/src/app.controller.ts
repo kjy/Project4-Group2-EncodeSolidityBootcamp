@@ -1,5 +1,10 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
+
+export class requestTokensDTO {
+  address: string;
+  amount: string;
+}
 
 @Controller()
 export class AppController {
@@ -8,5 +13,10 @@ export class AppController {
   @Get("get-token-contract-address")
   getTokenContractAddress(): any {
     return this.appService.getTokenContractAddress();
+  }
+
+  @Post("request-tokens")
+  requestTokens(@Body() body: requestTokensDTO): any {
+    return this.appService.requestTokens(body.address, body.amount);
   }
 }
