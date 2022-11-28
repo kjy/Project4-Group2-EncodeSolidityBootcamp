@@ -199,7 +199,9 @@ export class AppComponent {
     }
 
     getHistoricalData() {
-        //todo get data from backend
+        // this.http.get<any>(`${this.backendUrl}/get-historical-data`).subscribe((ans) => {
+        //     this.historicalData = ans.result;
+        // })
         this.historicalData = [
             {
                 "a": 1,
