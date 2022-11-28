@@ -42,6 +42,9 @@ export class AppComponent {
     tokenRequestPending: boolean;
     errorMsg: string | undefined;
 
+    historicalData: any | undefined;
+    k_historicalData: string[] | undefined;
+
     constructor(private http: HttpClient) {
         // set the provider object
         this.provider = ethers.getDefaultProvider('goerli');
@@ -68,6 +71,7 @@ export class AppComponent {
         this.ballotContractAddress = address;
         this.ballotContract = new ethers.Contract(this.ballotContractAddress, ballotJson.abi, this.wallet);
 
+        this.getHistoricalData();
         this.updateValues();
     }
 
@@ -192,6 +196,21 @@ export class AppComponent {
 
     disconnectWallet() {
         this.wallet = undefined;
+    }
+
+    getHistoricalData() {
+        //todo get data from backend
+        this.historicalData = [
+            {
+                "a": 1,
+                "b": 2
+            },
+            {
+                "a": 3,
+                "b": 4
+            }
+        ]
+        this.k_historicalData = Object.keys(this.historicalData[0]);
     }
 
     async getTransaction(hash: string) {

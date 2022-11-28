@@ -144,6 +144,25 @@
             </div>
         </div>
     </div>
+
+    <div *ngIf="historicalData" class="container">
+        <table class="table thead-dark table-bordered table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th *ngFor=" let key of k_historicalData" scope="col">
+                        {{key}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor=" let res of historicalData">
+                    <td *ngFor=" let key of k_historicalData">
+                        {{res[key]}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 
