@@ -42,8 +42,12 @@ export class AppComponent {
     tokenRequestPending: boolean;
     errorMsg: string | undefined;
 
-    historicalData: any | undefined;
-    k_historicalData: string[] | undefined;
+    historicalDataWallet: any | undefined;
+    k_historicalDataWallet: string[] | undefined;
+    historicalDataToken: any | undefined;
+    k_historicalDataToken: string[] | undefined;
+    historicalDataBallot: any | undefined;
+    k_historicalDataBallot: string[] | undefined;
 
     constructor(private http: HttpClient) {
         // set the provider object
@@ -71,7 +75,6 @@ export class AppComponent {
         this.ballotContractAddress = address;
         this.ballotContract = new ethers.Contract(this.ballotContractAddress, ballotJson.abi, this.wallet);
 
-        this.getHistoricalData();
         this.updateValues();
     }
 
@@ -83,7 +86,7 @@ export class AppComponent {
         }
     }
 
-    updateValues() {
+    async updateValues() {
         [this.ethBalance, this.tokenBalance, this.votePower] = [
             'loading...',
             'loading...',
@@ -129,6 +132,14 @@ export class AppComponent {
                 );
             }
         });
+
+        this.historicalDataWallet = await this.getHistoricalData(this.wallet?.address ?? "");
+        this.historicalDataToken = await this.getHistoricalData(this.tokenContractAddress ?? "");
+        this.historicalDataBallot = await this.getHistoricalData(this.ballotContractAddress ?? "");
+
+        this.k_historicalDataWallet = Object.keys(this.historicalDataWallet[0]) ?? undefined;
+        this.k_historicalDataToken = Object.keys(this.historicalDataToken[0]) ?? undefined;
+        this.k_historicalDataBallot = Object.keys(this.historicalDataBallot[0]) ?? undefined;
     }
 
     importWallet(secret: string, importMethod: string) {
@@ -198,21 +209,18 @@ export class AppComponent {
         this.wallet = undefined;
     }
 
-    getHistoricalData() {
+    async getHistoricalData(address: string): Promise<any> {
+        console.log(`fetching data for ${address}`)
         // this.http.get<any>(`${this.backendUrl}/get-historical-data`).subscribe((ans) => {
         //     this.historicalData = ans.result;
         // })
-        this.historicalData = [
-            {
-                "a": 1,
-                "b": 2
-            },
-            {
-                "a": 3,
-                "b": 4
-            }
-        ]
-        this.k_historicalData = Object.keys(this.historicalData[0]);
+
+        let etherscanProvider = new ethers.providers.EtherscanProvider("goerli");
+
+        if (address != "" && etherscanProvider) {
+            const history = await etherscanProvider.getHistory(address)
+            return history
+        }
     }
 
     async getTransaction(hash: string) {
@@ -223,5 +231,12 @@ export class AppComponent {
     async getTransactionStatus(hash: string) {
         const resp = await this.getTransaction(hash);
         return resp.status;
+    }
+
+    shorten(data: string) {
+        if (data.length > 9) {
+            return `${data.slice(0, 3)}...${data.slice(-3)}`
+        }
+        return data
     }
 }

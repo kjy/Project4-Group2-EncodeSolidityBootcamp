@@ -145,23 +145,97 @@
         </div>
     </div>
 
-    <div *ngIf="historicalData" class="container">
-        <table class="table thead-dark table-bordered table-hover table-responsive">
-            <thead>
-                <tr>
-                    <th *ngFor=" let key of k_historicalData" scope="col">
-                        {{key}}
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor=" let res of historicalData">
-                    <td *ngFor=" let key of k_historicalData">
-                        {{res[key]}}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <hr>
+    <div class="container">
+        <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="wallet-tab" data-bs-toggle="tab" data-bs-target="#wallet-tab-pane"
+                    type="button" role="tab" aria-controls="wallet-tab-pane" aria-selected="true">Wallet Txs</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="token-tab" data-bs-toggle="tab" data-bs-target="#token-tab-pane"
+                    type="button" role="tab" aria-controls="token-tab-pane" aria-selected="false">Token Txs</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ballot-tab" data-bs-toggle="tab" data-bs-target="#ballot-tab-pane"
+                    type="button" role="tab" aria-controls="ballot-tab-pane" aria-selected="false">Ballot Txs</button>
+            </li>
+        </ul>
+        <div class="tab-content my-4" id="myTabContent">
+            <div class="tab-pane fade show active" id="wallet-tab-pane" role="tabpanel" aria-labelledby="wallet-tab"
+                tabindex="0">
+                <div *ngIf="!historicalDataWallet || !k_historicalDataWallet">
+                    Nothing to show here yet. Connect a wallet or a contract or perform some transaction on them to see
+                    history here.
+                </div>
+                <div *ngIf="historicalDataWallet" class="container">
+                    <table class="table thead-dark table-bordered table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th *ngFor=" let key of k_historicalDataWallet" scope="col">
+                                    {{key}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor=" let res of historicalDataWallet">
+                                <td *ngFor=" let key of k_historicalDataWallet">
+                                    {{res[key]}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="token-tab-pane" role="tabpanel" aria-labelledby="token-tab" tabindex="0">
+                <div *ngIf="!historicalDataToken || !k_historicalDataToken">
+                    Nothing to show here yet. Connect a wallet or a contract or perform some transaction on them to see
+                    history here.
+                </div>
+                <div *ngIf="historicalDataToken" class="container">
+                    <table class="table thead-dark table-bordered table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th *ngFor=" let key of k_historicalDataToken" scope="col">
+                                    {{key}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor=" let res of historicalDataToken">
+                                <td *ngFor=" let key of k_historicalDataToken">
+                                    {{res[key]}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="ballot-tab-pane" role="tabpanel" aria-labelledby="ballot-tab" tabindex="0">
+                <div *ngIf="!historicalDataBallot || !k_historicalDataBallot">
+                    Nothing to show here yet. Connect a wallet or a contract or perform some transaction on them to see
+                    history here.
+                </div>
+                <div *ngIf="historicalDataBallot" class="container">
+                    <table class="table thead-dark table-bordered table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th *ngFor=" let key of k_historicalDataBallot" scope="col">
+                                    {{key}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor=" let res of historicalDataBallot">
+                                <td *ngFor=" let key of k_historicalDataBallot">
+                                    {{res[key]}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
