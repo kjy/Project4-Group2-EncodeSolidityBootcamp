@@ -18,7 +18,7 @@ export class AppService {
     const mintTx = await contract.mint(address, ethers.utils.parseEther(amount));
     const receipt = await mintTx.wait();
 
-    return { result: `Transaction hash for ${receipt.transactionHash}` };
+    return { result: receipt.transactionHash };
   }
 
 }
