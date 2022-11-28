@@ -34,6 +34,7 @@ export class AppComponent {
     ballotVotePower: number | string | undefined;
     ballotWinningProposal: number | string | undefined;
     ballotWinnerName: string | undefined;
+    ballotWinningVotes: number | string | undefined;
 
     backendUrl: string | undefined;
     tokenContractAddress: string | undefined;
@@ -93,7 +94,8 @@ export class AppComponent {
             'loading...'
         ];
 
-        [this.ballotVotePower, this.ballotWinningProposal, this.ballotWinnerName] = [
+        [this.ballotVotePower, this.ballotWinningProposal, this.ballotWinnerName, this.ballotWinningVotes] = [
+            'loading...',
             'loading...',
             'loading...',
             'loading...'
@@ -122,6 +124,12 @@ export class AppComponent {
                 this.ballotContract['winningProposal']().then(
                     (ballotWinningProposal: number) => {
                         this.ballotWinningProposal = ballotWinningProposal;
+                        if (this.ballotContract) {
+                            this.ballotContract['proposals'](this.ballotWinningProposal).then((ballotWinningVotes: any) => {
+                                console.log(ballotWinningVotes.voteCount)
+                                this.ballotWinningVotes = ballotWinningVotes.voteCount;
+                            })
+                        }
                     }
                 );
                 this.ballotContract['winnerName']().then(
