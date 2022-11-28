@@ -5,8 +5,8 @@
         <div *ngIf="!wallet" class="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <button (click)="createWallet()" type="button" class="btn btn-success btn-lg px-4 gap-3">Create Wallet
             </button>
-            <button type="button" class="btn btn-primary btn-lg px-4 gap-3" 
-                data-bs-toggle="modal" data-bs-target="#importWallet">
+            <button type="button" class="btn btn-primary btn-lg px-4 gap-3" data-bs-toggle="modal"
+                data-bs-target="#importWallet">
                 Import Wallet
             </button>
             <button (click)="connectWallet()" type="button" class="btn btn-danger btn-lg px-4 gap-3" disabled>Connect
@@ -21,10 +21,10 @@
                     <h6><a href='https://goerli.etherscan.io/address/{{wallet.address}}' target="_blank">View on
                             Etherscan</a></h6>
                     <p class="card-text">
-                        {{wallet.address}} 
-                            <button (click)="disconnectWallet()" type="button" class="btn btn-danger">
-                                Disconnect
-                            </button>
+                        {{wallet.address}}
+                        <button (click)="disconnectWallet()" type="button" class="btn btn-danger">
+                            Disconnect
+                        </button>
                     </p>
 
                 </div>
@@ -66,17 +66,25 @@
                         </p>
                     </div>
                 </div>
+                <button (click)="updateValues()" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                        <path
+                            d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                    </svg>
+                </button>
             </div>
             <button [disabled]="tokenRequestPending" (click)="requestTokensTen()" type="button"
-                class="btn btn-success btn-lg px-4 gap-3">
+                class="btn btn-success btn-lg px-4 m-3 gap-3">
                 Request Tokens
             </button>
-            <button type="button" class="btn btn-primary btn-lg px-4 m-3 gap-3" 
-                data-bs-toggle="modal" data-bs-target="#transferTokens">
+            <button type="button" class="btn btn-primary btn-lg px-4 m-3 gap-3" data-bs-toggle="modal"
+                data-bs-target="#transferTokens">
                 Transfer Tokens
             </button>
-            <button type="button" class="btn btn-primary btn-lg px-4 m-3 gap-3" 
-                data-bs-toggle="modal" data-bs-target="#delegateTokens">
+            <button type="button" class="btn btn-primary btn-lg px-4 m-3 gap-3" data-bs-toggle="modal"
+                data-bs-target="#delegateTokens">
                 Self Delegate
             </button>
         </div>
@@ -107,7 +115,7 @@
                                     </p>
                                 </div>
                             </div>
-            
+
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Winning Proposal: </h4>
@@ -116,7 +124,7 @@
                                     </p>
                                 </div>
                             </div>
-            
+
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Winner Name: </h4>
@@ -125,13 +133,115 @@
                                     </p>
                                 </div>
                             </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Winning Votes: </h4>
+                                    <p class="card-text">
+                                        {{ballotWinningVotes}}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <button type="button" class="btn btn-danger btn-lg px-4 m-3 gap-3" 
-                        data-bs-toggle="modal" data-bs-target="#vote">
+                        <button type="button" class="btn btn-danger btn-lg px-4 m-3 gap-3" data-bs-toggle="modal"
+                            data-bs-target="#vote">
                             Vote
                         </button>
-                        
+
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="container">
+        <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="wallet-tab" data-bs-toggle="tab" data-bs-target="#wallet-tab-pane"
+                    type="button" role="tab" aria-controls="wallet-tab-pane" aria-selected="true">Wallet Txs</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="token-tab" data-bs-toggle="tab" data-bs-target="#token-tab-pane"
+                    type="button" role="tab" aria-controls="token-tab-pane" aria-selected="false">Token Txs</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ballot-tab" data-bs-toggle="tab" data-bs-target="#ballot-tab-pane"
+                    type="button" role="tab" aria-controls="ballot-tab-pane" aria-selected="false">Ballot Txs</button>
+            </li>
+        </ul>
+        <div class="tab-content my-4" id="myTabContent">
+            <div class="tab-pane fade show active" id="wallet-tab-pane" role="tabpanel" aria-labelledby="wallet-tab"
+                tabindex="0">
+                <div *ngIf="!historicalDataWallet || !k_historicalDataWallet">
+                    Nothing to show here yet. Connect a wallet or a contract or perform some transaction on them to see
+                    history here.
+                </div>
+                <div *ngIf="historicalDataWallet" class="container">
+                    <table class="table thead-dark table-bordered table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th *ngFor=" let key of k_historicalDataWallet" scope="col">
+                                    {{key}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor=" let res of historicalDataWallet">
+                                <td *ngFor=" let key of k_historicalDataWallet">
+                                    {{res[key]}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="token-tab-pane" role="tabpanel" aria-labelledby="token-tab" tabindex="0">
+                <div *ngIf="!historicalDataToken || !k_historicalDataToken">
+                    Nothing to show here yet. Connect a wallet or a contract or perform some transaction on them to see
+                    history here.
+                </div>
+                <div *ngIf="historicalDataToken" class="container">
+                    <table class="table thead-dark table-bordered table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th *ngFor=" let key of k_historicalDataToken" scope="col">
+                                    {{key}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor=" let res of historicalDataToken">
+                                <td *ngFor=" let key of k_historicalDataToken">
+                                    {{res[key]}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="ballot-tab-pane" role="tabpanel" aria-labelledby="ballot-tab" tabindex="0">
+                <div *ngIf="!historicalDataBallot || !k_historicalDataBallot">
+                    Nothing to show here yet. Connect a wallet or a contract or perform some transaction on them to see
+                    history here.
+                </div>
+                <div *ngIf="historicalDataBallot" class="container">
+                    <table class="table thead-dark table-bordered table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th *ngFor=" let key of k_historicalDataBallot" scope="col">
+                                    {{key}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor=" let res of historicalDataBallot">
+                                <td *ngFor=" let key of k_historicalDataBallot">
+                                    {{res[key]}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -158,7 +268,9 @@
                     </div>
                 </div>
                 <div class="input-group mt-4">
-                    <input #inputPrivateKey type="text" value='73ca93ab7a1bd9a844c8efcff7141a54c423a333f83fd7e2d4bb28be22f6a7a8' class="form-control" placeholder="Enter your private key">
+                    <input #inputPrivateKey type="text"
+                        value='73ca93ab7a1bd9a844c8efcff7141a54c423a333f83fd7e2d4bb28be22f6a7a8' class="form-control"
+                        placeholder="Enter your private key">
                     <div class="input-group-append">
                         <button class="btn btn-success" data-bs-dismiss="modal" type="button"
                             (click)="importWallet(inputPrivateKey.value, 'privatekey')">Via Private Key</button>
@@ -183,16 +295,16 @@
             <div class="modal-body">(It's their lucky day)
                 <div class="input-group mt-4">
                     <div class="input-group-prepend">
-                        <div class="input-group-text pe-1" >Transfer To</div>
+                        <div class="input-group-text pe-1">Transfer To</div>
                     </div>
-                    <input #inputTransferTo type="text" class="form-control"
-                        placeholder="Enter receiver's address">
+                    <input #inputTransferTo type="text" class="form-control" placeholder="Enter receiver's address">
                 </div>
                 <div class="input-group mt-4">
                     <div class="input-group-prepend">
                         <div class="input-group-text pe-4 ps-4">Amount </div>
                     </div>
-                    <input #inputTransferAmount type="number" min='0' value='' class="form-control" placeholder="Enter amount to Transfer">
+                    <input #inputTransferAmount type="number" min='0' value='' class="form-control"
+                        placeholder="Enter amount to Transfer">
                 </div>
             </div>
             <div class="modal-footer">
@@ -207,7 +319,8 @@
 </div>
 
 <!--- DELEGATE TOKENS MODAL --->
-<div *ngIf="wallet" class="modal fade" id="delegateTokens" tabindex="-1" aria-labelledby="delegateTokensLabel" aria-hidden="true">
+<div *ngIf="wallet" class="modal fade" id="delegateTokens" tabindex="-1" aria-labelledby="delegateTokensLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -217,10 +330,9 @@
             <div class="modal-body">(So you want to try some governance?)
                 <div class="input-group mt-4">
                     <div class="input-group-prepend">
-                        <div class="input-group-text pe-1" >Delegate To</div>
+                        <div class="input-group-text pe-1">Delegate To</div>
                     </div>
-                    <input #inputDelegateTo type="text" class="form-control"
-                        value='{{wallet.address}}'
+                    <input #inputDelegateTo type="text" class="form-control" value='{{wallet.address}}'
                         placeholder="Enter delegates address" disabled>
                 </div>
             </div>
@@ -248,13 +360,15 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text pe-4 ps-4">Proposal </div>
                     </div>
-                    <input #inputProposal type="text" min='0' value='' class="form-control" placeholder="Enter proposal index">
+                    <input #inputProposal type="text" min='0' value='' class="form-control"
+                        placeholder="Enter proposal index">
                 </div>
                 <div class="input-group mt-4">
                     <div class="input-group-prepend">
                         <div class="input-group-text pe-4 ps-4">Amount </div>
                     </div>
-                    <input #inputVoteAmount type="text" min='0' value='' class="form-control" placeholder="Enter amount to vote">
+                    <input #inputVoteAmount type="text" min='0' value='' class="form-control"
+                        placeholder="Enter amount to vote">
                 </div>
             </div>
             <div class="modal-footer">
